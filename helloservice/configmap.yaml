@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  GREETING: hello from configmap
+  SPECIAL_TYPE: charm
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: hello-config

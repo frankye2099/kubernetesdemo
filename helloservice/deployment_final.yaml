@@ -18,8 +18,11 @@ spec:
         app: helloservice
     spec:
       containers:
-      - image: frankye2099/helloservice
+      - image: frankye2099/helloservice:0.0.2
         name: helloservice
+        envFrom:
+          - configMapRef:
+              name: hello-config
         resources: {}
 status: {}
 ---
@@ -41,3 +44,21 @@ spec:
   type: ClusterIP
 status:
   loadBalancer: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: helloservice
+  name: helloservice-http
+spec:
+  ports:
+  - port: 9090
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: helloservice
+  type: LoadBalancer
+status:
+  loadBalancer: {}  

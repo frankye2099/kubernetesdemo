@@ -1,20 +1,14 @@
-kubernetes configmap
-```$xslt
+###kubernetes demo
 
+* aservice: 
+    * internal service
+    * deployment.yaml
+    * service clusterIP - internal 8080
+    * service loadbalancer - external 9091
 
-```
-
-kubernetes deployment.yaml
-```$xslt
-kubectl create deployment helloservice --image=frankye2099/helloservice --dry-run -o=yaml > deployment.yaml
-echo --- >> deployment.yaml
-kubectl create service clusterip helloservice --tcp=8080:8080 --dry-run -o=yaml >> deployment.yaml
-```
-
-deploy
-```$xslt
-kubectl apply -f deployment.yaml
-kubectl get all
-kubectl port-forward svc/helloservice 8080:8080
-curl localhost:8080/actuator/health
-```
+* helloservice
+    * call aservice (url in configmap) and return the status of aservice
+    * configmap.yaml
+    * deployment.yaml - refer to configmap
+    * service clusterIP - internal 8080
+    * service loadbalancer - external 9090

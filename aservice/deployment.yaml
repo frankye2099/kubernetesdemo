@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: aservice
+  name: aservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aservice
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: aservice
+    spec:
+      containers:
+      - image: frankye2099/aservice:0.0.1
+        name: aservice
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: aservice
+  name: aservice
+spec:
+  ports:
+  - name: 8080-8080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: aservice
+  type: ClusterIP
+status:
+  loadBalancer: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: aservice-http
+  name: aservice-http
+spec:
+  ports:
+  - name: 9091-8080
+    port: 9091
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: aservice
+  type: LoadBalancer
+status:
+  loadBalancer: {}
